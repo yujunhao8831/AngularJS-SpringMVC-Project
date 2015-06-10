@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.crm.domain">
+	<class name="GoodsOrder" table="goodsOrder">
+		<id name="id" >
+			<generator class="uuid.hex"></generator>
+		</id>
+		
+		<!-- private double reservationReceipts; // 预约收款 -->
+		<property name="reservationReceipts"></property>
+		<!-- private Date anAppointmentTime ;// 预约时间 -->
+		<property name="anAppointmentTime" type="timestamp"></property>
+		<!-- private int bookingDiscount; // 预约打折 -->
+		<property name="bookingDiscount"></property>
+		<!-- private Date timeToTakePhotographs; // 拍照时间 -->
+		<property name="timeToTakePhotographs" type="timestamp"></property>
+		<!-- private Date chipSelectTime; // 选片时间 -->
+		<property name="chipSelectTime" type="timestamp"></property>
+		<!-- private double hasReceivables;	// 已收款 -->
+		<property name="hasReceivables"></property>
+		<!-- private double receivables; // 应收款 -->
+		<property name="receivables"></property>
+		<!-- private double arrears; // 欠款 -->
+		<property name="arrears"></property>
+		<!-- private double price; // 总价 = 总价 - (总计 * 预约打折) --> 
+		<property name="price"></property>
+		
+		<!-- 		
+			* 订单和套餐的关系 * === *
+ 			* 订单和客户的关系 * === 1 
+ 		-->
+ 		
+		<!-- private Set<GoodsSetMeal> goodsSetMealSet = new HashSet<>(); // 套餐 -->
+		<set name="goodsSetMealSet" table="goodsOrder_goodsSetMeal"  >
+			<key column="goodsOrderId"></key>
+			<many-to-many class="GoodsSetMeal" column="goodsSetMealId"></many-to-many>
+		</set>
+		<!-- private Client client; // 客户 该订单属于哪个客户. -->
+		<many-to-one name="client" class="Client" column="clientId"></many-to-one>
+		
+		
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.crm.domain">
+	<class name="Department" table="department">
+		<id name="id">
+			<generator class="native"></generator>
+		</id>
+		<!-- private String name; // 部门名称 -->
+		<property name="name"></property>			
+		
+		
+		 <!-- 
+		 	 部门和员工的关系, 1 === *
+			 private Set<Employee> employeeSet = new HashSet<>(); // 部门下面的员工
+		 -->
+		<set name="employeeSet" >
+			<key column="departmentId"></key>
+			<one-to-many class="Employee"/>
+		</set>
+	
+	</class>
+</hibernate-mapping>

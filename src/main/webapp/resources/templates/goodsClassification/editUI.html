@@ -1,0 +1,70 @@
+<form novalidate name="myForm"  ><!-- ng-submit="" -->
+<div class=row>
+	<div class=col-lg-12>
+		<rd-widget>
+		<rd-widget-header icon=fa-tasks title=Servers>
+		
+		<!-- <a href=#>Manage</a></rd-widget-header> -->
+			<button ng-click="add(model)" ng-disabled="!myForm.model_name.$valid" style="color: green;">添加</button>
+		<span ng-if="model == null">
+		</span>
+		<span ng-if="model != null">
+		<button ng-click="edit(model)" ng-disabled="!myForm.model_name.$valid" style="color: green;">修改</button>
+		</span>
+		<button ng-click="reset()">重置</button>
+		<!-- ui-sref="^" : 去找 '父' 状态 -->
+		<button ui-sref="^">取消</button></rd-widget-header>
+		
+		<!-- <rd-widget-body classes="medium no-padding"> 下面classes被取消掉了 -->
+		<rd-widget-body >
+		
+		<div class=table-responsive>
+			<table class=table>
+				<!-- 
+					<span class=text-success>  : 成功 后面是√的图标
+					<span tooltip="Server Down!" class=text-danger> : 后面是感叹号
+					<span tooltip="Could not connect!" class=text-warning> : 后面是闪电符号
+				-->
+				<!--  
+					<input type="text" ng-model="nextPageNumber"  
+		       		size="3" maxlength="3" name="nextPageNumber" ng-pattern="/^[0-9]*[1-9][0-9]*$/" required/>页
+		       		<button ng-click="nextPage(nextPageNumber)" ng-disabled="!myForm.nextPageNumber.$valid">GO</button>
+		       		<div ng-messages="myForm.nextPageNumber.$error" style="color:red">
+		       			<div ng-if="nextPageNumber > totalPage">
+		       				没有该页面!最大页面为[{{totalPage}}]
+		       			</div>
+		       			<div ng-message="pattern">请输入正确的数字!</div>
+					</div>
+		          </div>
+				-->
+				<tbody>
+					<tr>
+						<td>类别名称</td>
+						<td><input type="text" ng-model="model.name" 
+							maxlength="30" 
+							name="model_name"
+							required />
+						<div ng-messages="myForm.model_name.$error" style="color:red">
+							
+			       			<div ng-message="required">请填写该字段!</div>
+						</div>	
+						</td>
+						<td><span class=text-success><i class="fa fa-check"></i></span></td>
+					</tr>
+					<tr ng-if="goodsList != null">
+						<td>类别商品</td>
+						<td>
+							<span ng-repeat="goods in goodsList">
+								{{goods.name}}<input type="checkbox" checklist-model="model.goodsSetIds" checklist-value="goods.id">
+							</span>
+						</td>
+						<td><span tooltip="Could not connect!" class=text-warning><i class="fa fa-flash"></i></span></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+		</rd-widget-body>
+	
+</div>
+</form>

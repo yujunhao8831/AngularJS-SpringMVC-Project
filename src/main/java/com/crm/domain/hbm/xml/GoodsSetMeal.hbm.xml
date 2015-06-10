@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.crm.domain">
+	<class name="GoodsSetMeal" table="goodsSetMeal">
+		<id name="id">
+			<generator class="native"></generator>
+		</id>
+
+		<!-- private String name; // 套餐名 -->
+		<property name="name"></property>
+		<!-- private int givePhotoNumber; // 赠送 -->
+		<property name="givePhotoNumber"></property>
+		<!-- private double price; // 价格 -->
+		<property name="price"></property>
+
+		<!-- 
+			* 商品套餐和订单的关系,* === * 
+			* 商品套餐和商品的关系,* === * 
+		-->
+		
+		<!-- order_goodsSetMeal -->
+		
+		<!-- private Set<GoodsOrder> goodsOrderSet = new HashSet<>(); // 套餐下的订单,套餐可以被多个订单使用. -->
+		<set name="goodsOrderSet" table="goodsOrder_goodsSetMeal" >
+			<key column="goodsSetMealId"></key>
+			<many-to-many class="GoodsOrder" column="goodsOrderId"></many-to-many>
+		</set>
+
+		<!-- private Set<Goods> goodsSet = new HashSet<>(); // 套餐下的商品,套餐包括多个商品 -->
+		<set name="goodsSet" table="goodsSetMeal_goods" >
+			<key column="goodsSetMealId"></key>
+			<many-to-many class="Goods" column="goodsId"></many-to-many>
+		</set>
+
+	</class>
+</hibernate-mapping>

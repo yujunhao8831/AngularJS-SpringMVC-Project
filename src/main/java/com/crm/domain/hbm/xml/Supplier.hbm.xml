@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.crm.domain">
+	<class name="Supplier" table="supplier">
+		<id name="id">
+			<generator class="native"></generator>
+		</id>
+		
+		<!-- private String name; // 名称 -->
+		<property name="name"></property>
+		<!-- private String phoneNumber; // 电话 -->
+		<property name="phoneNumber"></property>
+		<!-- private String address; // 地址 -->
+		<property name="address"></property>
+		<!-- private String zipCode; // 邮政编码 -->
+		<property name="zipCode"></property>
+		<!-- private String website; // 网址 -->
+		<property name="website"></property>
+		<!-- private String fax; // 传真 -->
+		<property name="fax"></property>
+
+	</class>
+</hibernate-mapping>

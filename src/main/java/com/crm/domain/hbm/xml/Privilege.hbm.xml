@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.crm.domain">
+	<class name="Privilege" table="privilege">
+		<id name="id">
+			<generator class="native"></generator>
+		</id>
+
+		<!-- private String name; // 权限名称 -->
+		<property name="name"></property>
+		<!-- private String url; // 权限URL. -->
+		<property name="url"></property>
+
+		<!-- private Set<Role> roleSet; // 多个权限(Privilege)对应多个角色(Role). * === * -->
+		<set name="roleSet" table="role_privilege" inverse="true">
+			<key column="privilegeId"></key>
+			<many-to-many class="Role" column="roleId"></many-to-many>
+		</set>
+
+		<!-- private Privilege parent; // 该权限的上级权限. -->
+		<many-to-one name="parent" class="Privilege" column="parentId"></many-to-one>
+
+
+		<!-- 
+			Set<Privilege> children 属性,用于表达,权限下级权限的关系,一对多的关系
+			order-by属性 : 在查询该集合的时候,在查询语句后面添加 Order by子句,
+			并且可以保存插入的顺序(之前使用HashSet,那么现在可能就是LinkedSet).
+		-->
+		<!-- private Set<Privilege> children = new HashSet<Privilege>(); // 该权限下级的权限. -->
+		<set name="children" order-by="id ASC">
+			<key column="parentId"></key>
+			<one-to-many class="Privilege" />
+		</set>
+
+
+	</class>
+</hibernate-mapping>

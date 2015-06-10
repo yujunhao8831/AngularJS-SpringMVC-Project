@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.crm.domain">
+	<class name="Children" table="children">
+		<id name="id">
+			<generator class="native"></generator>
+		</id>
+		<!-- private String name; // 姓名 -->
+		<property name="name"></property>			
+		<!-- private boolean sex; // 性别 -->
+		<property name="sex"></property>			
+		<!-- private Date birthday; // 生日 -->
+		<property name="birthday" type="timestamp"></property>			
+		<!-- private int age;// 年龄 -->
+		<property name="age"></property>			
+		<!-- private String Hobbies; // 爱好 -->
+		<property name="hobbies"></property>			
+		<!-- private String description; // 描述 -->
+		<property name="description"></property>			
+		
+		
+		<!-- * 孩子和客户的关系,* === 1 -->
+		<!-- private Client client; // 属于哪个客户的孩子 -->
+		<many-to-one name="client" class="Client" column="clientId" lazy="false"></many-to-one>
+		
+	
+	</class>
+</hibernate-mapping>

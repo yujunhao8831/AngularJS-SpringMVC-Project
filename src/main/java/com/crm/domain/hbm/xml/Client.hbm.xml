@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.crm.domain">
+	<class name="Client" table="client">
+		<id name="id">
+			<generator class="native"></generator>
+		</id>
+
+		<!-- private String name; // 客户名 -->
+		<property name="name"></property>
+		<!-- private boolean sex; // 性别 -->
+		<property name="sex"></property>
+		<!-- private String phoneNumber; // 电话 -->
+		<property name="phoneNumber"></property>
+		<!-- private Date birthday; // 生日 -->
+		<property name="birthday" type="timestamp"></property>
+		<!-- private int age; // 年龄 -->
+		<property name="age"></property>
+		<!-- private String address; // 地址 -->
+		<property name="address"></property>
+		<!-- private String description; // 描述 -->
+		<property name="description"></property>
+		<!-- private Date marriageTime; // 结婚时间 -->
+		<property name="marriageTime" type="timestamp"></property>
+
+		<!--	
+			* 客户和孩子的关系,1 === *
+			* 客户和员工的关系,* === * 
+			* 客户和订单的关系,1 === *
+		-->
+		<!-- private Set<Children> childrenSet = new HashSet<>(); // 孩子 -->
+		<set name="childrenSet" > 				
+			<key column="clientId"></key>
+			<one-to-many class="Children"/>
+		</set>
+		
+		<!-- private Set<Employee> employeeSet = new HashSet<>(); // 被哪些员工受理过 -->
+		<set name="employeeSet" table="client_employee" >
+			<key column="clientId"></key>
+			<many-to-many class="Employee" column="employeeId"></many-to-many>
+		</set>
+		
+		<!-- private Set<GoodsOrder> goodsOrderSet = new HashSet<>(); // 多个订单 -->
+		<set name="goodsOrderSet"> 				
+			<key column="clientId"></key>
+			<one-to-many class="GoodsOrder"/>
+		</set>
+		
+
+	</class>
+</hibernate-mapping>

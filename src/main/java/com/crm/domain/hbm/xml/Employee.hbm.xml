@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.crm.domain">
+	<class name="Employee" table="employee">
+		<id name="id">
+			<generator class="native"></generator>
+		</id>
+		<!-- String name; // 姓名 -->
+		<property name="name"></property>			
+		<!-- boolean sex; // 性别 -->
+		<property name="sex"></property>			
+		<!-- String phoneNumber; // 电话号码  -->
+		<property name="phoneNumber"></property>			
+		<!-- String address; // 地址 -->
+		<property name="address"></property>			
+		<!-- String description; // 描述 -->
+		<property name="description"></property>			
+		<!-- String idCard; // 身份证  -->
+		<property name="idCard"></property>			
+		<!-- int age; // 年龄 = 当前时间 - 生日 -->
+		<property name="age"></property>			
+		<!-- Date birthday; // 生日 --> 
+		<property name="birthday" type="timestamp"></property>			
+		<!-- double salary; // 薪水 = 薪水 + 薪水 * 提成 -->
+		<property name="salary"></property>			
+		
+		 <!-- 
+			员工和部门的关系, * === 1
+			员工和上级的关系, * === 1
+			上级和员工的关系, 1 === * 
+			员工和客户的关系, * === * 
+		 -->
+		
+		<!-- Employee parent; // 上级 -->
+		<many-to-one name="parent" class="Employee" column="parentId"></many-to-one>
+
+		<!-- Set<Employee> children = new HashSet<>(); // 下级 -->
+		<set name="children" >
+			<key column="parentId"></key>
+			<one-to-many class="Employee"/>
+		</set>
+
+		<!-- Department department; // 所属部门 -->
+		<many-to-one name="department" class="Department" column="departmentId" ></many-to-one>
+		
+		<!-- private Set<Client> clientSet = new HashSet<>(); // 员工和客户的关系 -->
+		<set name="clientSet" table="client_employee" >
+		<key column="employeeId"></key>
+		<many-to-many class="Client" column="clientId"></many-to-many>
+		
+		
+	</set>
+	
+	</class>
+</hibernate-mapping>

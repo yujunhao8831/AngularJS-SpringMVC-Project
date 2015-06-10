@@ -1,0 +1,114 @@
+<form novalidate name="myForm">
+<div class=row>
+	<div class=col-lg-12>
+	
+		<rd-widget>
+		
+		<rd-widget-header icon=fa-tasks title=Servers>
+		
+		<!-- <a href=#>Manage</a></rd-widget-header> -->
+		
+		<button ui-sref="index.goodsClassification.editUI">添加</button></rd-widget-header>
+		
+		<!-- <rd-widget-body classes="medium no-padding"> 下面classes被取消掉了 -->
+		<rd-widget-body >
+		
+		<div class=table-responsive>
+			<table class=table>
+				<!-- 
+					<span class=text-success>  : 成功 后面是√的图标
+					<span tooltip="Server Down!" class=text-danger> : 后面是感叹号
+					<span tooltip="Could not connect!" class=text-warning> : 后面是闪电符号
+				-->
+				<tbody>
+					<tr>
+						<td>类别编号</td>
+						<td>类别名称</td>
+						<td>类别所包含的商品</td>
+						<td><span class=text-success><i class="fa fa-check"></i></span></td>
+					</tr>
+					<tr ng-repeat="model in modelList">
+						<td>{{model.id }}</td>
+						<td>{{model.name}}</td>
+						<td>
+							<span ng-repeat="goods in model.goodsSet">		
+								{{goods.name}}
+							</span>
+						</td>
+						<td><span class=text-success><i class="fa fa-check"></i></span>
+							<button ui-sref="index.goodsClassification.editUI({id:model.id})">修改</button>
+ 							<!-- <button ui-sref="index.goodsClassification.editUI({id : model.id})">修改</button> -->
+		 					<button ng-click="remove(model.id)">删除</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+		</rd-widget-body>
+		<rd-widget-footer>
+		<div style="text-align: center;" >
+		            共{{allRow}}条记录,&nbsp;&nbsp;当前第<span id="currentPage">{{currentPage}}</span>页,&nbsp;&nbsp;共{{totalPage}}页<br/><br/>
+         </div>   
+         
+			<!-- 下面是分页的 -->
+			<!-- 点击无效 -->
+			<!-- <li ng-if="currentPage === 1"><a>&laquo;</a></li> -->
+			
+			<!-- 满足条件点击才有效 -->
+		<div style="text-align: center;">
+			<span ng-if="currentPage === 1">
+				首页  上一页 
+			</span>
+			<span ng-if="currentPage != 1">
+				<a ng-click="nextPage(1)">首页</a>
+				<a ng-click="nextPage(currentPage-1)">上一页</a>
+			</span>
+			
+			<span ng-repeat="start in starts track by $index">
+				<span ng-if="currentPage == start">
+					{{start}}
+				</span>
+				<span ng-if="currentPage != start">
+					<a ng-click="nextPage(start)">{{start}}</a>
+				</span>
+			</span>
+			
+	        <span ng-if="currentPage != totalPage && totalPage != 0">
+	        	<a  ng-click="nextPage(currentPage+1)">下一页</a>
+	        	<a  ng-click="nextPage(totalPage)">末页</a>
+	        </span>
+	        
+	        <span ng-if="currentPage == totalPage || totalPage == 0">
+	        	下一页
+	        	末页
+	        </span>
+		
+		
+			<br/>
+	        <label>每页显示多少</label>
+	        
+	        <button ng-click="pageSizeView(10)">10</button>
+	        <button ng-click="pageSizeView(30)">30</button>
+	        <button ng-click="pageSizeView(50)">50</button>
+		        
+	       	<br/>
+	        <div>
+	       		跳转至
+	       		<input type="text" ng-model="nextPageNumber"  
+	       		size="3" maxlength="3" name="nextPageNumber" ng-pattern="/^[0-9]*[1-9][0-9]*$/" required/>页
+	       		<button ng-click="nextPage(nextPageNumber)" ng-disabled="!myForm.nextPageNumber.$valid">GO</button>
+	       		<div ng-messages="myForm.nextPageNumber.$error" style="color:red">
+	       			<div ng-if="nextPageNumber > totalPage">
+	       				没有该页面!最大页面为[{{totalPage}}]
+	       			</div>
+	       			<div ng-message="pattern">请输入正确的数字!</div>
+				</div>
+	          </div>
+          </div>
+		<div class=clearfix></div>
+		</rd-widget-footer></rd-widget>
+	</div>
+	
+</div>
+</form>
